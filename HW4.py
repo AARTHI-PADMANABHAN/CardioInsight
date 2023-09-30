@@ -4,7 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 df_heart_disease = pd.read_csv("heart.xls")
+print("Pandas Version:", pd.__version__)
 pd.set_option('mode.use_inf_as_null', True)
+print("Configuration Set Successfully")
 
 # Set a white background for Seaborn plots
 sns.set(style="whitegrid")
