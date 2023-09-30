@@ -3,7 +3,7 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df_heart_disease = pd.read_csv("/Users/aarthipadmanabhan/Downloads/heart.xls")
+df_heart_disease = pd.read_csv("heart.xls")
 
 # Set a white background for Seaborn plots
 sns.set(style="whitegrid")
