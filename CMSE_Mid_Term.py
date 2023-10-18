@@ -80,7 +80,7 @@ if st.sidebar.button("Show Summary Statistics"):
     st.write(df.describe())
     
 if st.sidebar.button("Show Correlation matrix"):
-    st.subheader("Summary Statistics")
+    st.subheader("Correlation matrix")
     st.write(df.corr())
     
 st.sidebar.subheader("Visualize distributions of data")
@@ -137,6 +137,7 @@ if st.sidebar.button("Display information"):
     st.write("The distinct peaks and variations in the plot reveal a compelling pattern: there exists a specific age group within our dataset where the probability of experiencing heart disease is markedly elevated. Upon a closer analysis of the KDE plot depicting the relationship between age and the likelihood of heart disease, it appears that there is no discernible threshold or significant correlation between age and the target variable. Other factors such as chest pain type, the person's maximum heart rate achieved, and genetic predisposition could potentially play more significant roles in influencing heart health outcomes.")
     st.write(df.corr())
     st.write("From the above matrix, it is clear that chest pain and thalach(maximum heart rate) are highly correlated with the target variable when compared to the rest of the variables.")
+    df["target"] = df["target"].astype(str)
     sns.catplot(data=df, y="cp", hue="target", kind="count", palette="pastel", edgecolor=".6",)
     st.pyplot()
     st.write("The categorical plot examining different chest pain types (cp) in relation to the presence or absence of heart disease (target) reveals a compelling insight. Specifically, individuals with chest pain type 2 (Non-anginal pain) appears to be more susceptible to heart disease, as they are the predominant group affected within this dataset. The higher count of heart disease cases among individuals experiencing this specific chest pain type suggests a potential correlation between non-anginal pain and the presence of heart-related issues.")
