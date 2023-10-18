@@ -11,7 +11,7 @@ st.markdown("<h1 style='text-align: center;'>Heart Disease Data Analysis</h1>", 
 st.write("CMSE Mid-Term Project, by Aarthi Padmanabhan")
 
 # Image with caption
-st.image("/Users/aarthipadmanabhan/Downloads/Heart_image.png", caption="Heart Disease Analysis", use_column_width=True)
+st.image("Heart_image.png", caption="Heart Disease Analysis", use_column_width=True)
 
 # Project description
 description_lines = [
@@ -26,7 +26,7 @@ description_lines = [
 description = "\n".join(description_lines)
 st.write(description)
 
-df = pd.read_csv("/Users/aarthipadmanabhan/Downloads/heart.xls")
+df = pd.read_csv("/Users/aarthipadmanabhan/Downloadsheart.xls")
 
 st.subheader("Heart Disease Data")
 
