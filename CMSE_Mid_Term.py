@@ -26,7 +26,7 @@ description_lines = [
 description = "\n".join(description_lines)
 st.write(description)
 
-df = pd.read_csv("/Users/aarthipadmanabhan/Downloadsheart.xls")
+df = pd.read_csv("heart.xls")
 
 st.subheader("Heart Disease Data")
 
