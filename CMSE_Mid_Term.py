@@ -115,6 +115,7 @@ def show_data_overview():
         
 # Function to show Analysis page
 def show_eda():
+    st.title("Exploratory Data Analysis (EDA)")
     st.subheader("Risk Factors Identification")
     tab1, tab2, tab3 = st.tabs(["Feature Investigation", "Feature Correlation", "Further Exploration",])
     
@@ -211,6 +212,7 @@ def show_eda():
 
 # Function to show Conclusion page
 def show_conclusion():
+    st.title("Conclusion")
     tab1, tab2, tab3 = st.tabs(["Insights", "Next Steps", "References",])
     with tab1:
         st.subheader("Conclusions that can be drawn from observations are:")
