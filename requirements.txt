@@ -2,4 +2,4 @@ seaborn==0.12.2
 streamlit==1.27.0
 pandas==2.1.1
 plotly==5.18.0
-statsmodel==0.14.0
+statsmodels==0.14.0
