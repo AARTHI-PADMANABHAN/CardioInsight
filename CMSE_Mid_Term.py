@@ -4,12 +4,24 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 import statsmodels.api as sm
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras import regularizers
+from sklearn import model_selection
+import plotly.graph_objects as go
+import plotly.figure_factory as ff
+from sklearn.metrics import confusion_matrix
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 df = pd.read_csv("heart.xls")
+X = np.array(df.drop(['target'], axis=1))
+y = np.array(df['target'])
+X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, stratify=y, random_state=42, test_size = 0.2)
 
 st.markdown("<h1 style='text-align: center;'>Heart Disease Data Analysis</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #999999; font-style: italic;'>CMSE Mid-Term Project, presented by Aarthi Padmanabhan</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #999999; font-style: italic;'>Presented by Aarthi Padmanabhan</p>", unsafe_allow_html=True)
 
 st.sidebar.markdown("🌟Hello Explorer! Welcome to the Heart Disease Data Analysis app! Step inside and explore, where insights await at every corner.🎩✨")
 
@@ -23,7 +35,7 @@ def show_introduction():
     tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "About Data",])
 
     with tab1:
-        st.image("Heart_image.png", caption="Heart Disease Analysis", use_column_width=True, width=10)
+        st.image("heart.png", caption="Heart Disease Analysis", use_column_width=True, width=10)
         description_lines = [
     "In the realm of healthcare and cardiology, understanding the factors influencing heart disease is crucial for prevention and effective treatment.",
     "Various aspects, such as age, gender, chest pain type, resting blood pressure, cholesterol levels, fasting blood sugar, electrocardiographic measurements, maximum heart rate achieved, exercise-induced angina, and several other attributes, play pivotal roles.",
@@ -115,7 +127,6 @@ def show_data_overview():
         
 # Function to show Analysis page
 def show_eda():
-    st.title("Exploratory Data Analysis (EDA)")
     st.subheader("Risk Factors Identification")
     tab1, tab2, tab3 = st.tabs(["Feature Investigation", "Feature Correlation", "Further Exploration",])
     
@@ -210,9 +221,198 @@ def show_eda():
         st.plotly_chart(fig)
         st.write("Zoom in/out, hover over the data for better visualization.")
 
+def create_binary_model(num_neurons_layer1, num_neurons_layer2, dropout_rate,
+                        learning_rate, activation_function, optimizer, regularization_strength,
+                        include_dropout=True):
+    # Create model
+    model = Sequential()
+    model.add(Dense(num_neurons_layer1, input_dim=13, kernel_initializer='normal',
+                    kernel_regularizer=regularizers.l2(regularization_strength),
+                    activation=activation_function))
+    
+    if include_dropout:
+        model.add(Dropout(dropout_rate))
+    
+    model.add(Dense(num_neurons_layer2, kernel_initializer='normal',
+                    kernel_regularizer=regularizers.l2(regularization_strength),
+                    activation=activation_function))
+    
+    if include_dropout:
+        model.add(Dropout(dropout_rate))
+    
+    model.add(Dense(1, activation='sigmoid'))
+    
+    # Compile model
+    optimizer_instance = Adam(lr=learning_rate) if optimizer == 'adam' else optimizer
+    model.compile(loss='binary_crossentropy', optimizer=optimizer_instance, metrics=['accuracy'])
+    
+    return model
+
+def show_model_accuracy(num_neurons_layer1, num_neurons_layer2, dropout_rate,
+                        learning_rate, activation_function, optimizer, regularization_strength, epochs,
+                        batch_size, include_dropout=True):
+    binary_model = create_binary_model(num_neurons_layer1, num_neurons_layer2, dropout_rate,
+                           learning_rate, activation_function, optimizer, regularization_strength,
+                           include_dropout)
+    history = binary_model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=epochs, batch_size=batch_size)
+    
+    y_prob = binary_model.predict(X_test)
+    y_pred = (y_prob > 0.5).astype(int)  
+    
+    # Calculate confusion matrix
+    cm = confusion_matrix(y_test, y_pred)
+    
+    # Display confusion matrix using Plotly heatmap
+    st.subheader("Confusion Matrix")
+    
+    colorscale = [
+            [0, 'rgb(255,255,255)'],
+            [0.5, 'rgb(173,216,230)'],  # Light Blue
+            [1, 'rgb(0,128,128)']      # Teal
+        ]
+    
+    fig = ff.create_annotated_heatmap(z=cm, x=["Predicted 0", "Predicted 1"],
+                                          y=["Actual 0", "Actual 1"],
+                                          colorscale=colorscale)
+    fig.update_layout(width=550, height=300)
+    st.plotly_chart(fig)
+    
+    df_accuracy = pd.DataFrame({
+        'Epoch': np.arange(1, epochs + 1),
+        'Train Accuracy': history.history['accuracy'],
+        'Test Accuracy': history.history['val_accuracy']
+    })
+    
+    fig_accuracy = go.Figure()
+    
+    fig_accuracy.add_trace(go.Scatter(x=df_accuracy['Epoch'], y=df_accuracy['Train Accuracy'],
+                                      mode='lines', name='Train Accuracy'))
+    fig_accuracy.add_trace(go.Scatter(x=df_accuracy['Epoch'], y=df_accuracy['Test Accuracy'],
+                                      mode='lines', name='Test Accuracy'))
+    
+    # Set the size of the graph
+    fig_accuracy.update_layout(title='Model Accuracy Over Epochs',
+                               xaxis_title='Epoch',
+                               yaxis_title='Accuracy',
+                               legend=dict(x=0, y=1, traceorder='normal'),
+                               width=550,  # Set the width of the graph
+                               height=400)  # Set the height of the graph
+    
+    st.plotly_chart(fig_accuracy)
+    
+    # Interactive plot using Plotly for Model Loss
+    df_loss = pd.DataFrame({
+        'Epoch': np.arange(1, epochs + 1),
+        'Train Loss': history.history['loss'],
+        'Test Loss': history.history['val_loss']
+    })
+
+    fig_loss = go.Figure()
+    
+    fig_loss.add_trace(go.Scatter(x=df_loss['Epoch'], y=df_loss['Train Loss'],
+                                  mode='lines', name='Train Loss'))
+    fig_loss.add_trace(go.Scatter(x=df_loss['Epoch'], y=df_loss['Test Loss'],
+                                  mode='lines', name='Test Loss'))
+    
+    # Set the size of the graph
+    fig_loss.update_layout(title='Model Loss Over Epochs',
+                           xaxis_title='Epoch',
+                           yaxis_title='Loss',
+                           legend=dict(x=0, y=1, traceorder='normal'),
+                           width=550,  # Set the width of the graph
+                           height=400)  # Set the height of the graph
+    
+    st.plotly_chart(fig_loss)
+    
+def predict_heart_disease():
+    
+    age = st.text_input("Enter age")
+    sex = st.selectbox("Sex", [0, 1])
+    cp = st.selectbox("Chest Pain Type", [0, 1, 2, 3])
+    trestbps = st.text_input("Enter Resting Blood Pressure")
+    chol = st.text_input("Enter Serum Cholestoral")
+    fbs = st.text_input("Enter Fasting Blood Sugar")
+    restecg = st.selectbox("Resting Electrocardiographic Results", [0, 1, 2])
+    thalach = st.text_input("Enter Maximum Heart Rate Achieved")
+    exang = st.selectbox("Exercise Induced Angina", [0, 1])
+    oldpeak = st.text_input("Enter ST Depression Induced by Exercise Relative to Rest")
+    slope = st.selectbox("Slope of the Peak Exercise ST Segment", [0, 1, 2])
+    ca = st.selectbox("Number of Major Vessels", [0, 1, 2, 3])
+    thal = st.selectbox("Thalassemia", [1, 2, 3])
+    
+    if st.button("Predict"):
+        # Perform model prediction using the stored user inputs
+
+        user_inputs = [age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]
+        
+        # Convert the list to a NumPy array
+        user_inputs_array = np.array(user_inputs)
+        
+        # Reshape the array if necessary (e.g., if the model expects a single row)
+        user_inputs_array = user_inputs_array.reshape(1, -1)
+
+        binary_model = create_binary_model(16, 8, 0.25, 0.001, 'relu', 'adam', 0.001, False)
+        history = binary_model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=175, batch_size=10)
+        # Make predictions
+        prediction = binary_model.predict(user_inputs_array)
+        result = prediction[0]
+
+        # Display prediction
+        if result:
+            st.success("The model predicts that you have heart disease.")
+        else:
+            st.success("The model predicts that you do not have heart disease.")
+        
+def show_model_exploration_classification():
+    tab1, tab2 = st.tabs(["Model Analysis: Neural Network", "Heart Disease Classification",])
+    with tab1:
+        st.subheader("Neural Network Model")
+        st.write("👇 Explore with the options below and dive into a detailed analysis of the neural model.")
+        
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            activation_function = st.selectbox("Activation Function", ["relu", "sigmoid"])
+        
+        with col2:
+            num_neurons_layer1 = st.slider("Neurons in Layer 1", min_value=1, max_value=128, value=16)
+        
+        with col3:
+            num_neurons_layer2 = st.slider("Neurons in Layer 2", min_value=1, max_value=128, value=8)
+        
+        with col4:
+            dropout_rate = st.slider("Dropout Rate", min_value=0.0, max_value=1.0, value=0.25, step=0.01)
+        
+        col5, col6, col7, col8 = st.columns(4)
+        
+        with col5:
+            learning_rate = st.slider("Learning Rate", min_value=0.0001, max_value=0.1, value=0.001, step=0.0001)
+        
+        with col6:
+            optimizer = st.selectbox("Optimizer", ["adam", "rmsprop", "sgd"])
+        
+        with col7:
+            regularization_strength = st.slider("L2 Regularization", min_value=0.0, max_value=0.1, value=0.001, step=0.0001)
+        
+        with col8:
+            epochs = st.slider("Epochs", min_value=1, max_value=200, value=180)
+        
+        batch_size = st.slider("Batch Size", min_value=1, max_value=256, value=10)
+            
+        include_dropout = st.checkbox("Include Dropout", value=True)
+            
+        if st.button("Train and Analyze Model"):
+            show_model_accuracy(num_neurons_layer1, num_neurons_layer2, dropout_rate,
+                                        learning_rate, activation_function, optimizer, regularization_strength, epochs,
+                                        batch_size, include_dropout)
+            
+    with tab2:
+        predict_heart_disease()
+        
+    
+
 # Function to show Conclusion page
 def show_conclusion():
-    st.title("Conclusion")
     tab1, tab2, tab3 = st.tabs(["Insights", "Next Steps", "References",])
     with tab1:
         st.subheader("Conclusions that can be drawn from observations are:")
@@ -266,6 +466,7 @@ def main():
     "[📚 Introduction](#introduction)",
     "[🔍 Data Overview](#dataoverview)",
     "[📊 Exploratory Data Analysis (EDA))](#eda)",
+    "[🔧 Model Exploration and Classification](#model-exploration-classification)",
     "[🎓 Conclusion](#conclusion)"
     ])
 
@@ -276,6 +477,8 @@ def main():
         session_state["selected_page"] = "dataoverview"   
     elif "Exploratory Data Analysis (EDA)" in selected_option:
         session_state["selected_page"] = "eda"
+    elif "Model Exploration and Classification" in selected_option:
+        session_state["selected_page"] = "model-exploration-classification"    
     elif "Conclusion" in selected_option:
         session_state["selected_page"] = "conclusion"
 
@@ -286,9 +489,18 @@ def main():
         show_data_overview()    
     elif session_state["selected_page"] == "eda":
         show_eda()
+    elif session_state["selected_page"] == "model-exploration-classification":
+        show_model_exploration_classification()
     elif session_state["selected_page"] == "conclusion":
         show_conclusion()
 
 # Run the app
 if __name__ == "__main__":
     main()
+
+    
+     
+   
+        
+
+    
