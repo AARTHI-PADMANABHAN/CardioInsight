@@ -413,7 +413,7 @@ def show_model_exploration_classification():
 
 # Function to show Conclusion page
 def show_conclusion():
-    tab1, tab2, tab3 = st.tabs(["Insights", "Next Steps", "References",])
+    tab1, tab2, tab3, tab4 = st.tabs(["Insights", "Next Steps", "References", "Bio"])
     with tab1:
         st.subheader("Conclusions that can be drawn from observations are:")
         st.markdown("### 1. Elevated Probability of Heart Disease in Specific Age Group")
@@ -432,27 +432,24 @@ def show_conclusion():
         st.markdown("Individuals experiencing non-anginal pain (cp=2) and displaying elevated thalach levels are at a substantially higher risk of heart disease. This observation emphasizes the importance of considering both chest pain type and maximum heart rate achieved when evaluating the likelihood of heart-related issues.")
     
     with tab2:
-        st.write("## Next Steps After EDA:")
-
-        st.write("After conducting a thorough exploratory data analysis (EDA) on the Cleveland Heart Disease dataset, "
-                 "you've gained valuable insights into the relationships between various attributes and the presence of heart disease. "
-                 "Now, it's time to move forward and leverage this understanding to build predictive models and gain deeper insights. "
-                 "Here are the next steps you can consider:")
+        st.write("## Next Steps:")
         
-        st.write("1. **Feature Engineering:** Based on the insights gained from EDA, you can engineer new features or transform "
-                 "existing ones to enhance the predictive power of your models. For example, you can create interaction features between "
-                 "attributes, derive new categorical variables, or normalize numerical features for consistent scaling.")
+        st.write("1. Implement monitoring mechanisms to track model performance over time. Regularly update models with new data and retrain them if necessary.")
         
-        st.write("2. **Machine Learning Modeling:** Implement machine learning algorithms to predict the likelihood of heart disease. "
-                 "Common models like Logistic Regression, Decision Trees, Random Forest Classifier, Support Vector Machines, k-Nearest Neighbors, "
-                 "Naive Bayes, and Neural Networks can be employed. Experiment with different models, tune hyperparameters, and assess their "
-                 "performance using metrics like accuracy, precision, recall, and F1-score.")
+        st.write("2. Analyze misclassifications to understand the types of errors your model is making. This can provide insights into potential areas for improvement.")
         
     with tab3:
         st.write("## References:")
         
         st.write("- [Cleveland Heart Disease Dataset](https://www.kaggle.com/datasets/ritwikb3/heart-disease-cleveland)")
         st.write("- [Stream Lit App Documentation](https://docs.streamlit.io/library/get-started)")
+
+    with tab4:
+        st.write("## About me")
+
+        st.write("Hello! I am Aarthi. I am a dedicated data scientist with a passion for uncovering patterns and insights within complex datasets. Armed with a background in computer science and a keen interest in machine learning, I thrive on the challenge of turning raw data into actionable intelligence. My journey in data science has equipped me with a diverse skill set, including proficiency in Python, data visualization, and model development.")
+        st.write("Apart from my involvement in data science, I love being out in the nature, listening to music and volunteering activites.")
+        st.write("Feel free to reach out to me at [aarthi9929@gmail.com] or connect with me on [LinkedIn](https://www.linkedin.com/in/aarthi-padmanabhan-2b47b3183/)")
         
 # Main function to handle the app layout
 def main():
