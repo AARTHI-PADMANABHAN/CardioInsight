@@ -60,7 +60,7 @@ def show_introduction():
         - **Data Analysis and Visualization:**
           CardioInsight employs advanced data analysis techniques to uncover correlations and trends within the dataset. Visualization tools are utilized to represent complex relationships, making it easier for healthcare professionals to interpret and comprehend the findings.
         
-        - **Neural Network Algorithms:**
+        - **Neural Network Algorithm:**
           CardioInsight app integrates neural network algorithm to predict the likelihood of heart disease based on the input variables. This algorithm continuously learn from the dataset, adapting to new information and enhancing the accuracy of predictions over time.
         
         - **User-Friendly Interface:**
