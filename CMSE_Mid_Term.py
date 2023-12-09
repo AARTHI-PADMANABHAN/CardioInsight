@@ -76,9 +76,11 @@ def show_introduction():
     with tab4:
         st.write("About me")
         
-        st.write("Hello! I am Aarthi. I am a dedicated data scientist with a passion for uncovering patterns and insights within complex datasets. Armed with a background in computer science and a keen interest in machine learning, I thrive on the challenge of turning raw data into actionable intelligence. My journey in data science has equipped me with a diverse skill set, including proficiency in Python, data visualization, and model development.")
-        st.write("Apart from my involvement in data science, I love being out in the nature, listening to music and volunteering activites.")
-        st.write("Feel free to reach out to me at [aarthi9929@gmail.com] or connect with me on [LinkedIn](https://www.linkedin.com/in/aarthi-padmanabhan-2b47b3183/)")
+        st.write("Hello! I am Aarthi, a graduate student in the Data Science program at Michigan State University. Prior to my masters degree, I have two years of experience working as a Software Developer I at Oracle.")
+        st.write("/n An aspiring data analyst with a strong foundation in an array of programming languages, mathematical models and data science methodologies. I enjoy collaborating with corss-functional teams, bringing my technical expertise to the table while valuing diverse perspecties to drive successful project outcomes.")
+        
+        st.write("Apart from my involvement in data science, I love being out in the nature, listening to music, cooking and enjoy volunteering activites.")
+        st.write("Feel free to reach out to me at [aarthi9929@gmail.com] or connect with me on [LinkedIn](https://www.linkedin.com/in/aarthi-padmanabhan-2b47b3183/).")
         
 
 # Function to show Analysis page
