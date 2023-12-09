@@ -445,7 +445,12 @@ def show_model_exploration_classification():
     with tab1:
         st.subheader("Neural Network Model")
         st.write("👇 Explore with the options below and dive into a detailed analysis of the neural model.")
-        
+        st.write("Upon investigation, the following key insights are available in the app:")
+
+        # Add specific details or links to access confusion matrix, model accuracy, and test loss visualizations.
+        st.write("- **Confusion Matrix:** View detailed predictions for each class.")
+        st.write("- **Model Accuracy:** Track learning progress with accuracy trends.")
+        st.write("- **Test Loss:** Evaluate model generalization and potential overfitting.")
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
