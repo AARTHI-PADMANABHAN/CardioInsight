@@ -364,6 +364,32 @@ def show_model_accuracy(num_neurons_layer1, num_neurons_layer2, dropout_rate,
     
     st.plotly_chart(fig_loss)
 
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    
+    # Display precision and recall
+    st.subheader("Precision and Recall")
+    st.write(f"- **Precision:** {precision:.4f}")
+    st.write(f"- **Recall:** {recall:.4f}")
+
+    # Calculate ROC curve and AUC
+    fpr, tpr, thresholds = roc_curve(y_test, y_prob)
+    roc_auc = auc(fpr, tpr)
+
+    # Display AUC-ROC curve using Plotly
+    st.subheader("AUC-ROC Curve")
+    fig_auc_roc = go.Figure()
+    fig_auc_roc.add_trace(go.Scatter(x=fpr, y=tpr, mode='lines', name='ROC curve'))
+    fig_auc_roc.add_trace(go.Scatter(x=[0, 1], y=[0, 1], mode='lines', line=dict(dash='dash'), name='Random'))
+    fig_auc_roc.update_layout(
+        title='Receiver Operating Characteristic (ROC) Curve',
+        xaxis=dict(title='False Positive Rate'),
+        yaxis=dict(title='True Positive Rate'),
+        width=600,
+        height=400
+    )
+    st.plotly_chart(fig_auc_roc)
+
 def preprocess(sex, cp, exang,fbs,restecg):   
  
     if sex=="male":
