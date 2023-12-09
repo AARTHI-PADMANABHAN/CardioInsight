@@ -400,7 +400,10 @@ def preprocess(sex, cp, exang,fbs,restecg):
     return sex, cp, exang,fbs,restecg
     
 def predict_heart_disease():
-    
+
+    st.write(
+    "Let's unveil the mystery of your heart health! 🌟 Enter the details below, and the app tells you if your heart is singing a happy tune or if it needs a little extra care:"
+    )
     age = st.number_input('Age of persons (29 - 77): ', min_value=29, max_value=77, value=29, step=1)
     sex = st.radio("Select Gender: ", ('male', 'female'))
     cp = st.selectbox('Chest Pain Type', ("Typical angina", "Atypical angina", "Non-anginal pain", "Asymptomatic"))
