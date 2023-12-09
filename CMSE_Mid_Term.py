@@ -32,7 +32,7 @@ def init_session_state():
 # Function to show Introduction page
 def show_introduction():
     st.title("Introduction")
-    tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio",])
+    tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio1",])
 
     with tab1:
         st.image("Heart_image.png", caption="Heart Disease Analysis", use_column_width=True, width=10)
