@@ -477,7 +477,7 @@ def show_model_exploration_classification():
         batch_size = st.slider("Batch Size", min_value=1, max_value=256, value=10)
             
         include_dropout = st.checkbox("Include Dropout", value=True)
-            
+        
         if st.button("Train and Analyze Model"):
             show_model_accuracy(num_neurons_layer1, num_neurons_layer2, dropout_rate,
                                         learning_rate, activation_function, optimizer, regularization_strength, epochs,
