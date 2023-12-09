@@ -137,13 +137,19 @@ def show_data_overview():
         # Create a triangular mask
         mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
         
-        # Draw the heatmap with Streamlit
-        st.subheader("Diverging Correlation Heatmap")
-        st.write(sns.heatmap(corr_matrix, mask=mask, cmap="coolwarm", vmin=-1, vmax=1, center=0,
-                            square=True, linewidths=.5, annot=True, fmt=".2f"))
+        # Draw the heatmap with Seaborn
+        heatmap_fig, ax = plt.subplots(figsize=(10, 8))
+        sns.heatmap(corr_matrix, mask=mask, cmap="coolwarm", vmin=-1, vmax=1, center=0,
+                    square=True, linewidths=.5, annot=True, fmt=".2f", ax=ax)
         
-        plt.title("Correlation Heatmap")
-        st.pyplot()
+        # Display the Seaborn heatmap using st.pyplot
+        st.pyplot(heatmap_fig)
+        
+        # Extract and display annotations separately
+        st.subheader("Correlation Matrix Annotations:")
+        annotation_values = corr_matrix[mask].values
+        annotation_df = pd.DataFrame(annotation_values, index=corr_matrix.columns, columns=corr_matrix.columns)
+        st.write(annotation_df)
         # Display the Matplotlib figure using st.pyplot
         st.write("It is evident that the attributes—namely, chest pain type (cp), resting electrocardiographic results (restecg), maximum heart rate achieved during exercise (thalach), and the slope of the peak exercise ST segment (slope)—are positively correlated with the occurrence of heart disease when compared to other attributes. Let's examine these attributes in the Exploratory Data Analysis (EDA) section)!")
         
