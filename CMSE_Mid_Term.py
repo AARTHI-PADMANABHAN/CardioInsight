@@ -32,7 +32,7 @@ def init_session_state():
 # Function to show Introduction page
 def show_introduction():
     st.title("Introduction")
-    tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "About Data",])
+    tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio",])
 
     with tab1:
         st.image("Heart_image.png", caption="Heart Disease Analysis", use_column_width=True, width=10)
@@ -55,6 +55,19 @@ def show_introduction():
         """)
 
     with tab3:
+        st.write("About me")
+        
+        st.write("Hello! I am Aarthi. I am a dedicated data scientist with a passion for uncovering patterns and insights within complex datasets. Armed with a background in computer science and a keen interest in machine learning, I thrive on the challenge of turning raw data into actionable intelligence. My journey in data science has equipped me with a diverse skill set, including proficiency in Python, data visualization, and model development.")
+        st.write("Apart from my involvement in data science, I love being out in the nature, listening to music and volunteering activites.")
+        st.write("Feel free to reach out to me at [aarthi9929@gmail.com] or connect with me on [LinkedIn](https://www.linkedin.com/in/aarthi-padmanabhan-2b47b3183/)")
+        
+
+# Function to show Analysis page
+def show_data_overview():
+    st.title("Data Overview")
+    tab1, tab2, tab3 = st.tabs(["About data", "Summary Statistics", "Correlation Matrix",])
+    
+    with tab1:
         st.subheader("Overview of Cleveland Heart Disease Data")
         st.write("The Cleveland Heart Disease dataset provides a comprehensive insight into various aspects of patients' health, aiding researchers and healthcare professionals in understanding heart-related conditions. Here's an overview of the key attributes within the dataset:")
         st.markdown("""
@@ -89,31 +102,7 @@ def show_introduction():
         st.subheader("**Dataset Source:**")
         st.write("The Cleveland Heart Disease dataset was downloaded from the Kaggle website.")
         st.write("You can find the dataset and more information at the following link: \n [Cleveland Heart Disease Dataset](https://www.kaggle.com/datasets/ritwikb3/heart-disease-cleveland)")
-
-# Function to show Analysis page
-def show_data_overview():
-    st.title("Data Overview")
-    tab1, tab2, tab3 = st.tabs(["Display data", "Summary Statistics", "Correlation Matrix",])
-    
-    with tab1:
-        st.subheader("Cleveland Heart Disease Data")
-        filter_option = st.selectbox("Select Filtering Option", ["Filter by Age Range", "Display First 10 Rows", "Display Last 10 Rows", "Display Full data"])
-
-        # Filter data based on user selection
-        if filter_option == "Filter by Age Range":
-            age_range_start, age_range_end = st.slider("Select Age Range", df['age'].min(), df['age'].max(), (df['age'].min(), df['age'].max()))
-            filtered_df = df[(df['age'] >= age_range_start) & (df['age'] <= age_range_end)]
-            st.subheader(f"Filtered Data for Age Range: {age_range_start} to {age_range_end}")
-            st.write(filtered_df)
-        elif filter_option == "Display First 10 Rows":
-            st.subheader("First 10 Rows of Data")
-            st.write(df.head(10))
-        elif filter_option == "Display Last 10 Rows":
-            st.subheader("Last 10 Rows of Data")
-            st.write(df.tail(10))
-        elif filter_option == "Display Full data":
-            st.subheader("Full Data")
-            st.write(df)
+        
             
     with tab2:
         st.subheader("Statistics of Cleveland heart disease data")
@@ -122,7 +111,11 @@ def show_data_overview():
     
     with tab3:
         st.subheader("Correlation matrix of Cleveland heart disease data")
-        st.write(df.corr())
+        corr_matrix = df.corr()
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(corr_matrix, annot=True, cmap="Blues", fmt=".2f", linewidths=0.5)
+        plt.title("Correlation Heatmap")
+        st.pyplot()
         st.write("It is evident that the attributes—namely, chest pain type (cp), resting electrocardiographic results (restecg), maximum heart rate achieved during exercise (thalach), and the slope of the peak exercise ST segment (slope)—are positively correlated with the occurrence of heart disease when compared to other attributes. Let's examine these attributes in the Exploratory Data Analysis (EDA) section)!")
         
 # Function to show Analysis page
@@ -144,7 +137,7 @@ def show_eda():
             x_column = st.selectbox("Select X-axis Column:", df.columns, key="x_column")
             bins = st.slider("Select no. of bins:", min_value=1, max_value=50, value=10)
         with col2:
-            sns.histplot(data=df, x=x_column, hue='target', bins=bins, color='skyblue', edgecolor='black')
+            sns.histplot(data=df, x=x_column, bins=bins, hue="target", multiple="stack", palette="Blues")
             plt.xlabel(x_column)
             plt.ylabel("Frequency")
             plt.title(f'Histogram of {x_column.capitalize()} with {bins} Bins')
@@ -152,12 +145,20 @@ def show_eda():
         st.subheader("Q-Q Plot")
         st.write("Q-Q plots are valuable tools for statisticians and data analysts to quickly assess the distributional properties of a dataset and make informed decisions about the appropriate statistical techniques to apply. Please select a column to customize your analysis.")
         selected_column = st.selectbox("Select a column for Q-Q plot:", df.select_dtypes(include='number').columns)
-        quantiles = sm.ProbPlot(df[selected_column]).qqplot(line='s')
-        plt.title(f"Q-Q Plot for {selected_column}")
+        # Create a Q-Q plot
+        quantiles = sm.ProbPlot(df[selected_column])
+        qq_plot = quantiles.qqplot(line='s')
+        
+        # Customize the plot
         plt.title(f"Q-Q Plot for {selected_column}")
         plt.xlabel("Theoretical Quantiles")
         plt.ylabel("Sample Quantiles")
-        st.pyplot(quantiles)
+        
+        # Add legends
+        plt.legend(["Sample Quantiles", "Theoretical Quantiles"], loc="best")
+        
+        # Show the plot in Streamlit
+        st.pyplot(qq_plot)
         
         st.subheader("Major Insights:")
         st.markdown("""
@@ -176,13 +177,25 @@ def show_eda():
             x = st.selectbox("Select X-axis Column:", df.columns, key="x")
             y = st.selectbox("Select Y-axis Column:", df.columns, key="y")
         with col2:
-            fig = px.scatter(df, x=x, y=y, color='target',
-                     labels={x: x.capitalize(),
-                             y: y.capitalize(),
-                             'target': 'Heart Disease'},
-                     title=f"2D Scatter Plot: {x.capitalize()} vs {y.capitalize()}",
-                     color_continuous_scale=px.colors.qualitative.Set1,
-                     hover_data=['age'])  # You can add more hover_data as needed
+            df_temp = df.copy()
+
+            # Convert 'target' column to string type in the copy
+            df_temp['target'] = df_temp['target'].astype(str)
+            
+            # Specify a color sequence using color_discrete_sequence
+            color_sequence = px.colors.qualitative.Set1
+            
+            # Specify colors for each class using color_discrete_map
+            color_map = {'0': 'blue', '1': 'red'}
+            
+            fig = px.scatter(df_temp, x=x, y=y, color='target',
+                             labels={x: x.capitalize(),
+                                     y: y.capitalize(),
+                                     'target': 'Heart Disease'},
+                             title=f"2D Scatter Plot: {x.capitalize()} vs {y.capitalize()}",
+                             color_discrete_sequence=color_sequence,
+                             color_discrete_map=color_map,
+                             hover_data=['age']) 
             # Display the scatter plot
             st.plotly_chart(fig)
         st.write("Hover over the data points to view the age information.")
@@ -209,12 +222,18 @@ def show_eda():
         Y = st.selectbox("Select Y-axis Column:", df.columns,  key="Y")
         Z = st.selectbox("Select Z-axis Column:", df.columns, key="Z")
     
-        fig = px.scatter_3d(df, x=X, y=Y, z=Z, color='target',
+        # Specify a color sequence using color_discrete_sequence
+        color_sequence = px.colors.qualitative.Set1
+        
+        # Specify colors for each class using color_discrete_map
+        color_map = {'0': 'blue', '1': 'red'}
+        fig = px.scatter_3d(df_temp, x=X, y=Y, z=Z, color='target',
                         labels={X: X,
                                 Y: Y,
                                 Z: Z,},
                         title="3D Scatter Plot with Hue as Target",
-                        color_continuous_scale=px.colors.qualitative.Set1,
+                        color_discrete_sequence=color_sequence,
+                        color_discrete_map=color_map,
                         hover_data=['age'])  # You can add more hover_data as needed
     
         # Display the 3D scatter plot
@@ -413,7 +432,7 @@ def show_model_exploration_classification():
 
 # Function to show Conclusion page
 def show_conclusion():
-    tab1, tab2, tab3, tab4 = st.tabs(["Insights", "Next Steps", "References", "Bio"])
+    tab1, tab2, tab3 = st.tabs(["Insights", "Next Steps", "References",])
     with tab1:
         st.subheader("Conclusions that can be drawn from observations are:")
         st.markdown("### 1. Elevated Probability of Heart Disease in Specific Age Group")
@@ -432,24 +451,27 @@ def show_conclusion():
         st.markdown("Individuals experiencing non-anginal pain (cp=2) and displaying elevated thalach levels are at a substantially higher risk of heart disease. This observation emphasizes the importance of considering both chest pain type and maximum heart rate achieved when evaluating the likelihood of heart-related issues.")
     
     with tab2:
-        st.write("## Next Steps:")
+        st.write("## Next Steps After EDA:")
+
+        st.write("After conducting a thorough exploratory data analysis (EDA) on the Cleveland Heart Disease dataset, "
+                 "you've gained valuable insights into the relationships between various attributes and the presence of heart disease. "
+                 "Now, it's time to move forward and leverage this understanding to build predictive models and gain deeper insights. "
+                 "Here are the next steps you can consider:")
         
-        st.write("1. Implement monitoring mechanisms to track model performance over time. Regularly update models with new data and retrain them if necessary.")
+        st.write("1. **Feature Engineering:** Based on the insights gained from EDA, you can engineer new features or transform "
+                 "existing ones to enhance the predictive power of your models. For example, you can create interaction features between "
+                 "attributes, derive new categorical variables, or normalize numerical features for consistent scaling.")
         
-        st.write("2. Analyze misclassifications to understand the types of errors your model is making. This can provide insights into potential areas for improvement.")
+        st.write("2. **Machine Learning Modeling:** Implement machine learning algorithms to predict the likelihood of heart disease. "
+                 "Common models like Logistic Regression, Decision Trees, Random Forest Classifier, Support Vector Machines, k-Nearest Neighbors, "
+                 "Naive Bayes, and Neural Networks can be employed. Experiment with different models, tune hyperparameters, and assess their "
+                 "performance using metrics like accuracy, precision, recall, and F1-score.")
         
     with tab3:
         st.write("## References:")
         
         st.write("- [Cleveland Heart Disease Dataset](https://www.kaggle.com/datasets/ritwikb3/heart-disease-cleveland)")
         st.write("- [Stream Lit App Documentation](https://docs.streamlit.io/library/get-started)")
-
-    with tab4:
-        st.write("## About me")
-
-        st.write("Hello! I am Aarthi. I am a dedicated data scientist with a passion for uncovering patterns and insights within complex datasets. Armed with a background in computer science and a keen interest in machine learning, I thrive on the challenge of turning raw data into actionable intelligence. My journey in data science has equipped me with a diverse skill set, including proficiency in Python, data visualization, and model development.")
-        st.write("Apart from my involvement in data science, I love being out in the nature, listening to music and volunteering activites.")
-        st.write("Feel free to reach out to me at [aarthi9929@gmail.com] or connect with me on [LinkedIn](https://www.linkedin.com/in/aarthi-padmanabhan-2b47b3183/)")
         
 # Main function to handle the app layout
 def main():
