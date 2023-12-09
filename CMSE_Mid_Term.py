@@ -342,38 +342,72 @@ def show_model_accuracy(num_neurons_layer1, num_neurons_layer2, dropout_rate,
                            height=400)  # Set the height of the graph
     
     st.plotly_chart(fig_loss)
+
+def preprocess(sex, cp, exang,fbs,restecg):   
+ 
+    if sex=="male":
+        sex=1 
+    else: 
+        sex=0
+    
+    if cp=="Typical angina":
+        cp=0
+    elif cp=="Atypical angina":
+        cp=1
+    elif cp=="Non-anginal pain":
+        cp=2
+    elif cp=="Asymptomatic":
+        cp=2
+    
+    if exang=="Yes":
+        exang=1
+    elif exang=="No":
+        exang=0
+ 
+    if fbs=="Yes":
+        fbs=1
+    elif fbs=="No":
+        fbs=0
+        
+    if restecg=="Normal":
+        restecg=0
+    elif restecg=="ST-T Wave abnormality":
+        restecg=1
+    elif restecg=="Possible or definite left ventricular hypertrophy":
+        restecg=2
+
+    return sex, cp, exang,fbs,restecg
     
 def predict_heart_disease():
     
-    age = st.text_input("Enter age")
-    sex = st.selectbox("Sex", [0, 1])
-    cp = st.selectbox("Chest Pain Type", [0, 1, 2, 3])
-    trestbps = st.text_input("Enter Resting Blood Pressure")
-    chol = st.text_input("Enter Serum Cholestoral")
-    fbs = st.text_input("Enter Fasting Blood Sugar")
-    restecg = st.selectbox("Resting Electrocardiographic Results", [0, 1, 2])
-    thalach = st.text_input("Enter Maximum Heart Rate Achieved")
-    exang = st.selectbox("Exercise Induced Angina", [0, 1])
-    oldpeak = st.text_input("Enter ST Depression Induced by Exercise Relative to Rest")
-    slope = st.selectbox("Slope of the Peak Exercise ST Segment", [0, 1, 2])
-    ca = st.selectbox("Number of Major Vessels", [0, 1, 2, 3])
-    thal = st.selectbox("Thalassemia", [1, 2, 3])
+    age = st.number_input('Age of persons (29 - 77): ', min_value=29, max_value=77, value=29, step=1)
+    sex = st.radio("Select Gender: ", ('male', 'female'))
+    cp = st.selectbox('Chest Pain Type', ("Typical angina", "Atypical angina", "Non-anginal pain", "Asymptomatic"))
+    trtbps = st.number_input('Resting blood pressure (94 - 200): ', min_value=94, max_value=200, value=94, step=1)
+    chol = st.number_input('Serum cholestrol in mg/dl (126 - 564): ', min_value=126, max_value=564, value=126, step=1)
+    fbs = st.radio("Fasting Blood Sugar higher than 120 mg/dl", ['Yes', 'No'])
+    restecg = st.selectbox('Resting Electrocardiographic Results', ("Normal", "ST-T Wave abnormality", "Possible or definite left ventricular hypertrophy"))
+    thalachh = st.number_input('Maximum heart rate achieved thalach (71 - 202): ', min_value=71, max_value=202, value=71, step=1)
+    exang = st.selectbox('Exercise Induced Angina', ["Yes", "No"])
+    oldpeak = st.number_input(' ST depression induced by exercise relative to rest (oldpeak) (0 - 6.2): ')
+    slope = st.number_input(' Slope of the Peak Exercise ST Segment (slope) (0-2): ')
+    ca = st.number_input(' Number of major vessels colored by fluoroscopy (0-3): ')
+    thal = st.number_input(' Number of major vessels colored by fluoroscopy (1-3): ')
+    
+    sex, cp, exang, fbs, restecg = preprocess(sex, cp, exang,fbs,restecg)
+    
+    data= {'age':age, 'sex':sex, 'cp':cp, 'trestbps':trtbps, 'chol':chol, 'fbs':fbs, 'restecg':restecg, 'thalach':thalachh,
+       'exang':exang, 'oldpeak':oldpeak, 'slope':slope, 'ca':ca, 'thal':thal
+        }
+    features = pd.DataFrame(data, index=[0])
     
     if st.button("Predict"):
         # Perform model prediction using the stored user inputs
 
-        user_inputs = [age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]
-        
-        # Convert the list to a NumPy array
-        user_inputs_array = np.array(user_inputs)
-        
-        # Reshape the array if necessary (e.g., if the model expects a single row)
-        user_inputs_array = user_inputs_array.reshape(1, -1)
-
         binary_model = create_binary_model(16, 8, 0.25, 0.001, 'relu', 'adam', 0.001, False)
-        history = binary_model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=175, batch_size=10)
+        # history = binary_model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=175, batch_size=10)
         # Make predictions
-        prediction = binary_model.predict(user_inputs_array)
+        prediction = binary_model.predict(features)
         result = prediction[0]
 
         # Display prediction
