@@ -451,6 +451,9 @@ def show_model_exploration_classification():
         st.write("- **Confusion Matrix:** View detailed predictions for each class.")
         st.write("- **Model Accuracy:** Track learning progress with accuracy trends.")
         st.write("- **Test Loss:** Evaluate model generalization and potential overfitting.")
+        st.write("- **Precision:** Assess the accuracy of positive predictions.")
+        st.write("- **Recall:** Evaluate the model's ability to capture all positive instances.")
+        st.write("- **AUC-ROC Curve:** Visualize the trade-off between true positive rate and false positive rate.")
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
