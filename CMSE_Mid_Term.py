@@ -543,21 +543,10 @@ def show_conclusion():
         st.markdown("Individuals experiencing non-anginal pain (cp=2) and displaying elevated thalach levels are at a substantially higher risk of heart disease. This observation emphasizes the importance of considering both chest pain type and maximum heart rate achieved when evaluating the likelihood of heart-related issues.")
     
     with tab2:
-        st.write("## Next Steps After EDA:")
+        st.write("## Next Steps")
 
-        st.write("After conducting a thorough exploratory data analysis (EDA) on the Cleveland Heart Disease dataset, "
-                 "you've gained valuable insights into the relationships between various attributes and the presence of heart disease. "
-                 "Now, it's time to move forward and leverage this understanding to build predictive models and gain deeper insights. "
-                 "Here are the next steps you can consider:")
-        
-        st.write("1. **Feature Engineering:** Based on the insights gained from EDA, you can engineer new features or transform "
-                 "existing ones to enhance the predictive power of your models. For example, you can create interaction features between "
-                 "attributes, derive new categorical variables, or normalize numerical features for consistent scaling.")
-        
-        st.write("2. **Machine Learning Modeling:** Implement machine learning algorithms to predict the likelihood of heart disease. "
-                 "Common models like Logistic Regression, Decision Trees, Random Forest Classifier, Support Vector Machines, k-Nearest Neighbors, "
-                 "Naive Bayes, and Neural Networks can be employed. Experiment with different models, tune hyperparameters, and assess their "
-                 "performance using metrics like accuracy, precision, recall, and F1-score.")
+        st.write("1. **Continuous Monitoring and Maintenance:** Establish a system for continuous monitoring of model performance in the production environment. Set up alerts "
+             "for potential issues and plan for regular model updates or retraining to adapt to changing data patterns.")
         
     with tab3:
         st.write("## References:")
