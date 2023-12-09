@@ -133,8 +133,20 @@ def show_data_overview():
     with tab3:
         st.subheader("Correlation matrix of Cleveland heart disease data")
         corr_matrix = df.corr()
+
+        # Create a triangular mask
+        mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
+        
+        # Set up the matplotlib figure
         plt.figure(figsize=(10, 8))
-        sns.heatmap(corr_matrix, annot=True, cmap="Blues", fmt=".2f", linewidths=0.5)
+        
+        # Choose a diverging colormap
+        cmap = sns.diverging_palette(220, 20, as_cmap=True)
+        
+        # Draw the heatmap with the mask
+        sns.heatmap(corr_matrix, mask=mask, cmap=cmap, vmin=-1, vmax=1, center=0,
+                    square=True, linewidths=.5, annot=True, fmt=".2f")
+        
         plt.title("Correlation Heatmap")
         st.pyplot()
         st.write("It is evident that the attributes—namely, chest pain type (cp), resting electrocardiographic results (restecg), maximum heart rate achieved during exercise (thalach), and the slope of the peak exercise ST segment (slope)—are positively correlated with the occurrence of heart disease when compared to other attributes. Let's examine these attributes in the Exploratory Data Analysis (EDA) section)!")
