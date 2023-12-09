@@ -143,7 +143,7 @@ def show_data_overview():
                             square=True, linewidths=.5, annot=True, fmt=".2f"))
         
         plt.title("Correlation Heatmap")
-        
+        st.pyplot()
         # Display the Matplotlib figure using st.pyplot
         st.write("It is evident that the attributes—namely, chest pain type (cp), resting electrocardiographic results (restecg), maximum heart rate achieved during exercise (thalach), and the slope of the peak exercise ST segment (slope)—are positively correlated with the occurrence of heart disease when compared to other attributes. Let's examine these attributes in the Exploratory Data Analysis (EDA) section)!")
         
