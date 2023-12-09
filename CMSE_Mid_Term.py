@@ -20,7 +20,7 @@ X = np.array(df.drop(['target'], axis=1))
 y = np.array(df['target'])
 X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, stratify=y, random_state=42, test_size = 0.2)
 
-st.markdown("<h1 style='text-align: center;'>Heart Disease Data Analysis</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>CardioInsight: A Predictive Analytics Tool for Heart Disease</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: #999999; font-style: italic;'>Presented by Aarthi Padmanabhan</p>", unsafe_allow_html=True)
 
 st.sidebar.markdown("🌟Hello Explorer! Welcome to the Heart Disease Data Analysis app! Step inside and explore, where insights await at every corner.🎩✨")
