@@ -237,7 +237,7 @@ def show_eda():
         st.markdown("- **High thalach with cp '2':** Individuals with chest pain type '2' and high thalach are more likely to have heart disease.")
             
     with tab3:
-        st.subheader("3D Plot")
+        st.subheader("Multivariate Analysis")
         st.write("For deeper insights and a more comprehensive understanding of the data relationships, consider using 3D plots. They can reveal intricate patterns and correlations between multiple variables simultaneously.")
         X = st.selectbox("Select X-axis Column:", df.columns, key="X")
         Y = st.selectbox("Select Y-axis Column:", df.columns,  key="Y")
