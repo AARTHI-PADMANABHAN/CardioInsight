@@ -32,7 +32,7 @@ def init_session_state():
 # Function to show Introduction page
 def show_introduction():
     st.title("Introduction")
-    tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio",])
+    tab1, tab2, tab3, tab4 = st.tabs(["Problem Defintion", "Objectives", "Key Features", "Bio",])
 
     with tab1:
         st.write("In the realm of healthcare and cardiology, the complex nature of heart disease demands a comprehensive understanding of its multifaceted influencing factors. Key variables such as age, gender, chest pain type, resting blood pressure, cholesterol levels, fasting blood sugar, electrocardiographic measurements, maximum heart rate achieved, and exercise-induced angina collectively contribute to the intricate landscape of cardiovascular health. The need to unravel the interplay among these factors is crucial for effective prevention and treatment strategies.")
@@ -55,6 +55,25 @@ def show_introduction():
         """)
 
     with tab3:
+        st.subheader("Key Features:")
+        st.markdown("""
+        - **Data Analysis and Visualization:**
+          CardioInsight employs advanced data analysis techniques to uncover correlations and trends within the dataset. Visualization tools are utilized to represent complex relationships, making it easier for healthcare professionals to interpret and comprehend the findings.
+        
+        - **Neural Network Algorithms:**
+          CardioInsight app integrates neural network algorithm to predict the likelihood of heart disease based on the input variables. This algorithm continuously learn from the dataset, adapting to new information and enhancing the accuracy of predictions over time.
+        
+        - **User-Friendly Interface:**
+          CardioInsight features an intuitive and user-friendly interface, allowing healthcare professionals to input patient data seamlessly. The platform provides clear and concise results, aiding in quick decision-making and facilitating efficient patient care.
+        
+        - **Customizable Risk Assessment:**
+          CardioInsight allows for customizable risk assessments, enabling healthcare professionals to tailor predictions based on specific patient profiles. This flexibility enhances the utility of CardioInsight across diverse patient populations.
+        
+        - **Continuous Learning and Improvement:**
+          CardioInsight is designed to adapt and improve continuously. As more data becomes available, the app refines its predictive capabilities, staying at the forefront of advancements in cardiology and healthcare.
+        """)
+        
+    with tab4:
         st.write("About me")
         
         st.write("Hello! I am Aarthi. I am a dedicated data scientist with a passion for uncovering patterns and insights within complex datasets. Armed with a background in computer science and a keen interest in machine learning, I thrive on the challenge of turning raw data into actionable intelligence. My journey in data science has equipped me with a diverse skill set, including proficiency in Python, data visualization, and model development.")
