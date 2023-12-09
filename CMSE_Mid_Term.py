@@ -192,7 +192,7 @@ def show_eda():
          
     with tab2:
         st.write("Let's visualize relationship between multiple variables and figure out patterns, clusters and correlations using PairPlot.")
-        st.subheader("2D Scatter Plot")
+        st.subheader("Bivariate Analysis")
         col1, col2 = st.columns([1,3])
         with col1:
             x = st.selectbox("Select X-axis Column:", df.columns, key="x")
@@ -220,7 +220,7 @@ def show_eda():
             # Display the scatter plot
             st.plotly_chart(fig)
         st.write("Hover over the data points to view the age information.")
-        st.subheader("PairPlot")
+        st.subheader("Cross-Variable Scatter Matrix")
         selected_features = st.multiselect("Select Features:", df.columns, default=['cp', 'thalach', 'target'])
         if selected_features:
             pair_plot = sns.pairplot(data=df, vars=selected_features, hue='target', palette='Set1', diag_kind='kde')
