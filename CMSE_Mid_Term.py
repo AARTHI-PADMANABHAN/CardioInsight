@@ -138,17 +138,19 @@ def show_data_overview():
         mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
         
         # Set up the matplotlib figure
-        plt.figure(figsize=(10, 8))
+        fig, ax = plt.subplots(figsize=(10, 8))
         
         # Choose a diverging colormap
         cmap = sns.diverging_palette(220, 20, as_cmap=True)
         
         # Draw the heatmap with the mask
         sns.heatmap(corr_matrix, mask=mask, cmap=cmap, vmin=-1, vmax=1, center=0,
-                    square=True, linewidths=.5, annot=True, fmt=".2f")
+                    square=True, linewidths=.5, annot=True, fmt=".2f", ax=ax)
         
-        plt.title("Correlation Heatmap")
-        st.pyplot()
+        plt.title("Diverging Correlation Heatmap")
+        
+        # Display the Matplotlib figure using st.pyplot
+        st.pyplot(fig)
         st.write("It is evident that the attributes—namely, chest pain type (cp), resting electrocardiographic results (restecg), maximum heart rate achieved during exercise (thalach), and the slope of the peak exercise ST segment (slope)—are positively correlated with the occurrence of heart disease when compared to other attributes. Let's examine these attributes in the Exploratory Data Analysis (EDA) section)!")
         
 # Function to show Analysis page
