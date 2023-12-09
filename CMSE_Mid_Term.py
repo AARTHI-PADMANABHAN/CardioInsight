@@ -47,11 +47,16 @@ def show_introduction():
         st.write(description)
 
     with tab2:
+        st.write("The primary objective of CardioInsight is to act as a predictive analytics tool for heart disease, leveraging neural network algorithm to analyze diverse patient attributes. Through this exploration, the project aims to provide valuable insights that can contribute to the early diagnosis and management of heart-related conditions. By visualizing intricate relationships among these factors, CardioInsight strives to offer healthcare professionals a comprehensive and user-friendly platform for making informed decisions in the realm of cardiology.")
+        
         st.write("This app aims to explore the Cleveland Heart Disease dataset and answer the below question:")
 
         # List of questions in italics
         st.markdown("""
            - Risk Factors Identification: What are the primary risk factors associated with heart disease, and how do they interrelate?
+        """)
+        st.markdown("""
+           - Predictive Analysis: Can the tool accurately predict the likelihood of heart disease for an individual based on specific attributes such as age, gender, chest pain type, resting blood pressure, cholesterol levels, fasting blood sugar, electrocardiographic measurements, maximum heart rate achieved, and exercise-induced angina?
         """)
 
     with tab3:
