@@ -32,7 +32,7 @@ def init_session_state():
 # Function to show Introduction page
 def show_introduction():
     st.title("Introduction")
-    tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio1",])
+    tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio",])
 
     with tab1:
         st.image("Heart_image.png", caption="Heart Disease Analysis", use_column_width=True, width=10)
@@ -57,7 +57,7 @@ def show_introduction():
     with tab3:
         st.write("About me")
         
-        st.write("Hi Hello! I am Aarthi. I am a dedicated data scientist with a passion for uncovering patterns and insights within complex datasets. Armed with a background in computer science and a keen interest in machine learning, I thrive on the challenge of turning raw data into actionable intelligence. My journey in data science has equipped me with a diverse skill set, including proficiency in Python, data visualization, and model development.")
+        st.write("Hello! I am Aarthi. I am a dedicated data scientist with a passion for uncovering patterns and insights within complex datasets. Armed with a background in computer science and a keen interest in machine learning, I thrive on the challenge of turning raw data into actionable intelligence. My journey in data science has equipped me with a diverse skill set, including proficiency in Python, data visualization, and model development.")
         st.write("Apart from my involvement in data science, I love being out in the nature, listening to music and volunteering activites.")
         st.write("Feel free to reach out to me at [aarthi9929@gmail.com] or connect with me on [LinkedIn](https://www.linkedin.com/in/aarthi-padmanabhan-2b47b3183/)")
         
