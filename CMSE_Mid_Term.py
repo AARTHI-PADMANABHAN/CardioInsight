@@ -35,7 +35,7 @@ def show_introduction():
     tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio",])
 
     with tab1:
-        st.image("Heart_image.png", caption="Heart Disease Analysis", use_column_width=True, width=10)
+        st.image("heart-disease-hub.jpg", caption="Heart Disease Analysis", use_column_width=True, width=10)
         description_lines = [
     "In the realm of healthcare and cardiology, understanding the factors influencing heart disease is crucial for prevention and effective treatment.",
     "Various aspects, such as age, gender, chest pain type, resting blood pressure, cholesterol levels, fasting blood sugar, electrocardiographic measurements, maximum heart rate achieved, exercise-induced angina, and several other attributes, play pivotal roles.",
