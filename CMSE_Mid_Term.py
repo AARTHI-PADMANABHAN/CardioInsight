@@ -12,7 +12,7 @@ from tensorflow.keras import regularizers
 from sklearn import model_selection
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc_curve, auc
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 df = pd.read_csv("heart.xls")
