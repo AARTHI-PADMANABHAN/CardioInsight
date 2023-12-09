@@ -38,7 +38,7 @@ def show_introduction():
         st.write("In the realm of healthcare and cardiology, the complex nature of heart disease demands a comprehensive understanding of its multifaceted influencing factors. Key variables such as age, gender, chest pain type, resting blood pressure, cholesterol levels, fasting blood sugar, electrocardiographic measurements, maximum heart rate achieved, and exercise-induced angina collectively contribute to the intricate landscape of cardiovascular health. The need to unravel the interplay among these factors is crucial for effective prevention and treatment strategies.")
         
         st.image("heart-disease-hub.jpg", caption="Heart Disease Analysis", use_column_width=True, width=10)
-        st.write("Despite advancements in medical science, the pathways to heart disease remain elusive, prompting the initiation of this project to delve into an extensive dataset. Through meticulous analysis, the goal is to unearth hidden correlations and trends, providing a nuanced perspective that can enhance early diagnosis and management of heart-related conditions.")
+        st.write("Despite advancements in medical science, the pathways to heart disease remain elusive, prompting the initiation of this app to delve into an extensive dataset. Through meticulous analysis, the goal is to unearth hidden correlations and trends, providing a nuanced perspective that can enhance early diagnosis and management of heart-related conditions.")
         st.write("CardioInsight addresses the imperative challenge of navigating the intricate web of variables influencing heart disease. The vast dataset serves as a treasure trove, holding valuable information that, when deciphered, can illuminate the subtle connections between diverse attributes. The overarching problem lies in the complexity of understanding how age, gender, physiological measurements, and lifestyle factors intertwine to contribute to the development of heart-related conditions. The exploration of these intricate relationships aims to unlock insights that have the potential to transform the landscape of cardiovascular care. By visualizing and comprehending these patterns, the project endeavors to bridge the knowledge gap, empowering healthcare professionals with a more nuanced understanding of heart disease etiology for improved prevention and timely intervention.")
 
     with tab2:
@@ -145,8 +145,8 @@ def show_eda():
     tab1, tab2, tab3 = st.tabs(["Feature Investigation", "Feature Correlation", "Further Exploration",])
     
     with tab1:
-        st.subheader("Histogram plot")
-        st.write("Histograms provide a visual representation of the distribution of a dataset. They help you understand how the data "
+        st.subheader("Value Spread Visualization")
+        st.write("This provides a visual representation of the distribution of a dataset. They help you understand how the data "
          "points are spread across different ranges (bins), revealing insights about the central tendency, spread of data, "
          "skewness, etc.")
 
@@ -163,7 +163,7 @@ def show_eda():
             plt.ylabel("Frequency")
             plt.title(f'Histogram of {x_column.capitalize()} with {bins} Bins')
             st.pyplot()
-        st.subheader("Q-Q Plot")
+        st.subheader("Quantile-Quantile Analysis")
         st.write("Q-Q plots are valuable tools for statisticians and data analysts to quickly assess the distributional properties of a dataset and make informed decisions about the appropriate statistical techniques to apply. Please select a column to customize your analysis.")
         selected_column = st.selectbox("Select a column for Q-Q plot:", df.select_dtypes(include='number').columns)
         # Create a Q-Q plot
