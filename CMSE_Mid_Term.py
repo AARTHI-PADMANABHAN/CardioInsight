@@ -35,6 +35,8 @@ def show_introduction():
     tab1, tab2, tab3 = st.tabs(["Problem Defintion", "Objectives", "Bio",])
 
     with tab1:
+        st.write("In the realm of healthcare and cardiology, the complex nature of heart disease demands a comprehensive understanding of its multifaceted influencing factors. Key variables such as age, gender, chest pain type, resting blood pressure, cholesterol levels, fasting blood sugar, electrocardiographic measurements, maximum heart rate achieved, and exercise-induced angina collectively contribute to the intricate landscape of cardiovascular health. The need to unravel the interplay among these factors is crucial for effective prevention and treatment strategies. Despite advancements in medical science, the pathways to heart disease remain elusive, prompting the initiation of this project to delve into an extensive dataset. Through meticulous analysis, the goal is to unearth hidden correlations and trends, providing a nuanced perspective that can enhance early diagnosis and management of heart-related conditions.")
+        
         st.image("heart-disease-hub.jpg", caption="Heart Disease Analysis", use_column_width=True, width=10)
         description_lines = [
     "In the realm of healthcare and cardiology, understanding the factors influencing heart disease is crucial for prevention and effective treatment.",
