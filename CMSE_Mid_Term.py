@@ -147,9 +147,6 @@ def show_data_overview():
         
         # Extract and display annotations separately
         st.subheader("Correlation Matrix Annotations:")
-        annotation_values = corr_matrix[mask].values
-        annotation_df = pd.DataFrame(annotation_values, index=corr_matrix.columns, columns=corr_matrix.columns)
-        st.write(annotation_df)
         # Display the Matplotlib figure using st.pyplot
         st.write("It is evident that the attributes—namely, chest pain type (cp), resting electrocardiographic results (restecg), maximum heart rate achieved during exercise (thalach), and the slope of the peak exercise ST segment (slope)—are positively correlated with the occurrence of heart disease when compared to other attributes. Let's examine these attributes in the Exploratory Data Analysis (EDA) section)!")
         
