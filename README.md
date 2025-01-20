@@ -4,7 +4,7 @@ In the realm of healthcare and cardiology, the complex nature of heart disease d
 
 Despite advancements in medical science, the pathways to heart disease remain elusive, prompting the initiation of this app to delve into an extensive dataset. Through meticulous analysis, the goal is to unearth hidden correlations and trends, providing a nuanced perspective that can enhance early diagnosis and management of heart-related conditions.
 
-![]<>
+![]<heart-disease-hub.jpg>
 
 CardioInsight addresses the imperative challenge of navigating the intricate web of variables influencing heart disease. The vast dataset serves as a treasure trove, holding valuable information that, when deciphered, can illuminate the subtle connections between diverse attributes. The overarching problem lies in the complexity of understanding how age, gender, physiological measurements, and lifestyle factors intertwine to contribute to the development of heart-related conditions. The exploration of these intricate relationships aims to unlock insights that have the potential to transform the landscape of cardiovascular care. By visualizing and comprehending these patterns, the project endeavors to bridge the knowledge gap, empowering healthcare professionals with a more nuanced understanding of heart disease etiology for improved prevention and timely intervention.
 
