@@ -16,6 +16,10 @@ This app aims to explore the Cleveland Heart Disease dataset and answer the belo
 
 2. Predictive Analysis: Can the tool accurately predict the likelihood of heart disease for an individual based on specific attributes such as age, gender, chest pain type, resting blood pressure, cholesterol levels, fasting blood sugar, electrocardiographic measurements, maximum heart rate achieved, and exercise-induced angina?
 
+## Explore More Details
+
+For an interactive exploration of the data and more detailed visualizations, please visit our [Streamlit application](https://cmse830heartdiseasedataanalysis-aarthi.streamlit.app/). The application provides a user-friendly interface to delve deeper into the analysis, and observe how different variables influence the outcomes.
+
 
 
 
