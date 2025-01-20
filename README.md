@@ -18,7 +18,7 @@ This app aims to explore the Cleveland Heart Disease dataset and answer the belo
 
 ## Explore More Details
 
-For an interactive exploration of the data and more detailed visualizations, please visit our [Streamlit application](https://cmse830heartdiseasedataanalysis-aarthi.streamlit.app/). The application provides a user-friendly interface to delve deeper into the analysis, and observe how different variables influence the outcomes.
+For an interactive exploration of the data and more detailed visualizations, please visit my [Streamlit application](https://cmse830heartdiseasedataanalysis-aarthi.streamlit.app/). The application provides a user-friendly interface to delve deeper into the analysis, and observe how different variables influence the outcomes.
 
 
 
